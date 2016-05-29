@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String args[]) throws Exception{
         final int numberOfRoute = 5;
-        final int numberOfLoop = 4;
+        final int numberOfLoop = 10;
         final int numberOfAnt = 3;
         final double initPheromones = 1d;
         final double volatileRate = 0.02d;
@@ -40,17 +40,19 @@ public class Main {
 
         double [][] wIJ = WijCalculation.getWij(pheromonesList, alpha, distanceArray, beta);
 
-
+        PreromonesExporter preromonesExporter = new PreromonesExporter(System.getProperty("user.dir")+"/test.xls");
         for (int l=0 ;l < numberOfLoop ; l++) {
+            preromonesExporter.printString("==========preromones list round["+(l+1)+"]==========");
+            preromonesExporter.printArray(pheromonesList);
+            preromonesExporter.printLint();
 
-
-            System.out.println(Arrays.deepToString(pheromonesList));
+            //System.out.println(Arrays.deepToString(pheromonesList));
 
             Calculate c = new Calculate();
             //TODO : cal wIJ;
 
             List<Integer> antRunedTownPath = new ArrayList<>();
-            int town = 2;//c.getTown(numberOfRoute);
+            int town = c.getTown(numberOfRoute);
             antRunedTownPath.add(town);
             do {
                 town = c.getTown(wIJ[town], antRunedTownPath);
@@ -80,6 +82,7 @@ public class Main {
             //update wIJ
             wIJ = WijCalculation.getWij(pheromonesList, alpha, distanceArray, beta);
         }
+        preromonesExporter.dowrite();
 
         /*for(String key : pp.keySet()){
             System.out.println(key+"  count :  "+pp.get(key));
