@@ -1,6 +1,7 @@
-package test.com.antrun.logic;
+package com.antrun.logic;
 
 import com.antrun.logic.PheromonesCalculate;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;

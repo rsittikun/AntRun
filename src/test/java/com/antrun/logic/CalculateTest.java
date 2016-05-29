@@ -1,6 +1,7 @@
-package test.com.antrun.logic;
+package com.antrun.logic;
 
 import com.antrun.logic.Calculate;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by srattanakana on 5/28/2016 AD.
  */
-public class calculateTest {
+public class CalculateTest {
     @Test
     public void getCumpopListTest(){
         double[] wTownList = new double[5];
@@ -24,11 +25,11 @@ public class calculateTest {
 
         Calculate c = new Calculate();
         double[] result = c.getCumppopList(wTownList, new ArrayList<>());
-        Assert.assertEquals(Double.valueOf(0.12692307692307694), result[0]);
-        Assert.assertEquals(Double.valueOf(0.5134615384615385), result[1]);
-        Assert.assertEquals(Double.valueOf(0.0), result[2]);
-        Assert.assertEquals(Double.valueOf(0.6923076923076924), result[3]);
-        Assert.assertEquals(Double.valueOf(1.0), result[4]);
+        Assert.assertEquals(0.12692307692307694, result[0]);
+        Assert.assertEquals(0.5134615384615385, result[1]);
+        Assert.assertEquals(0.0, result[2]);
+        Assert.assertEquals(0.6923076923076924, result[3]);
+        Assert.assertEquals(1.0, result[4]);
     }
 
     @Test
