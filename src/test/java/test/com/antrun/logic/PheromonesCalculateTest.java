@@ -26,7 +26,7 @@ public class PheromonesCalculateTest {
                 {1,1,1,1,0}
                 };
 
-        assertArrayEquals(expected, p.initPheromones(5,1));
+        Assert.assertArrayEquals(expected, p.initPheromones(5,1));
     }
     @Test
     public void pheromonesVolatileCalculateTest(){
@@ -40,7 +40,7 @@ public class PheromonesCalculateTest {
                 {0.98,0.98,0.98,0.98,0}
         };
 
-        assertArrayEquals(expected, p.pheromonesVolatileCalculate(p.initPheromones(5,1), 0.02d));
+        Assert.assertArrayEquals(expected, p.pheromonesVolatileCalculate(p.initPheromones(5,1), 0.02d));
     }
 
     @Test
@@ -59,6 +59,6 @@ public class PheromonesCalculateTest {
                 {1.012258064516129,0.98,0.98,0.98,0}
         };
 
-        assertArrayEquals(expected, p.pheromonesUpdateCalculate(list_0_98, towns, 31));
+        Assert.assertArrayEquals(expected, p.pheromonesUpdateCalculate(list_0_98, towns, 31));
     }
 }

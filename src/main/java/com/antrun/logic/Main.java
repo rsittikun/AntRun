@@ -16,15 +16,7 @@ public class Main {
         final double alpha = 5d;
         final double beta = 5d;
 
-        //TODO: Get from real
-/*        double [][] wIJ = {
-            {0.0000000000,0.0000100000,0.0000013200,0.0000305200,0.0009765700},
-            {0.0000100000,0.0000000000,0.0000040200,0.0003200000,0.0000305200},
-            {0.0000013200,0.0000040200,0.0000000000,0.0000018600,0.0000032000},
-            {0.0000305200,0.0003200000,0.0000018600,0.0000000000,0.0000013200},
-            {0.0009765700,0.0000305200,0.0000032000,0.0000013200,0.0000000000}
-        };*/
-
+        //TODO: Get from Excel file
         final double [][] distanceArray = {
                 { 0,10,15,8,4 },
                 { 10,0,12,5,8 },
@@ -75,7 +67,7 @@ public class Main {
             System.out.println(ss);
             //System.out.print("Distance => "+p.runDistance(distanceArray, antRunedTownPath));
 
-            //TODO: Update preromone
+            //TODO: Make sure update Pheromones and wIJ only one time
             pheromonesList = p.pheromonesVolatileCalculate(pheromonesList, volatileRate);
             pheromonesList = p.pheromonesUpdateCalculate(pheromonesList, antRunedTownPath ,p.runDistance(distanceArray, antRunedTownPath));
             pheromonesList = p.pheromonesPowerAlpha(pheromonesList, alpha);

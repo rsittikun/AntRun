@@ -4,7 +4,6 @@ import com.antrun.logic.Calculate;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -25,11 +24,11 @@ public class calculateTest {
 
         Calculate c = new Calculate();
         double[] result = c.getCumppopList(wTownList, new ArrayList<>());
-        assertEquals(Double.valueOf(0.12692307692307694), result[0]);
-        assertEquals(Double.valueOf(0.5134615384615385), result[1]);
-        assertEquals(Double.valueOf(0.0), result[2]);
-        assertEquals(Double.valueOf(0.6923076923076924), result[3]);
-        assertEquals(Double.valueOf(1.0), result[4]);
+        Assert.assertEquals(Double.valueOf(0.12692307692307694), result[0]);
+        Assert.assertEquals(Double.valueOf(0.5134615384615385), result[1]);
+        Assert.assertEquals(Double.valueOf(0.0), result[2]);
+        Assert.assertEquals(Double.valueOf(0.6923076923076924), result[3]);
+        Assert.assertEquals(Double.valueOf(1.0), result[4]);
     }
 
     @Test
@@ -48,8 +47,8 @@ public class calculateTest {
 
         int result = c.getTown(wTownList, new ArrayList<>());
         int hu_result = result + 1;
-        assertEquals(3, result);
-        assertEquals(4, hu_result);
+        Assert.assertEquals(3, result);
+        Assert.assertEquals(4, hu_result);
     }
 
 }
