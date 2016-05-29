@@ -39,10 +39,10 @@ public class Calculate {
     }
 
     public double[] getCumppopList(final double[] wTownList,final List<Integer> antRunTownPath){
-        double[] result = wTownList.clone();
+        double[] result = ArrayHelper.deepCopy(wTownList);
         double curr = 0;
 
-        double[] currentWTownList = wTownList.clone();
+        double[] currentWTownList = ArrayHelper.deepCopy(wTownList);
 
         for (Integer town : antRunTownPath){
             currentWTownList[town] = 0;
@@ -74,7 +74,7 @@ public class Calculate {
          * Be careful should call random only one time per getTown method
          */
         double randomNumber = random();
-        System.out.print("Random Number : "+randomNumber);
+        //System.out.print("Random Number : "+randomNumber);
         double[] cumppopList = initCumpopList(numberOfRoute);
 
         for(int i = 0 ; i < cumppopList.length ; i++){
@@ -91,17 +91,25 @@ public class Calculate {
          * Be careful should call random only one time per getTown method
          */
         double randomNumber = random();
-        System.out.print("Random Number : "+randomNumber);
+        //System.out.print("Random Number : "+randomNumber);
         double[] cumppopList = getCumppopList(wTownList, antRunedTownPath);
-
 
         for(int i = 0 ; i < cumppopList.length ; i++){
             if(randomNumber <= cumppopList[i]){
                 return i;
             }
         }
+
+        for(int i = 0 ; i < cumppopList.length ; i++){
+            if(Double.isNaN(cumppopList[i])){
+                return i;
+            }
+        }
+
         /** this is vary rarely case */
-        throw new Exception("Town not found!!! [Please make sure 'wTownList' is not Empty]");
+        System.out.println("[ERROR] Town not found!!! [Please make sure 'wTownList' is not Empty] or Infinity Pheromone");
+        return cumppopList.length-1;
+        //throw new Exception("Town not found!!! [Please make sure 'wTownList' is not Empty] or Infinity Pheromone");
    }
 
 

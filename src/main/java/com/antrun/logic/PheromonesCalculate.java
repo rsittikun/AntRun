@@ -35,8 +35,8 @@ public final class PheromonesCalculate {
      * For Pheromones Volatile after ant run
      * After ant run step 1
      */
-    public double[][] pheromonesVolatileCalculate(final double[][] pheromonesArray,double pheromonesVolatile){
-        double[][] result = pheromonesArray.clone();
+    public double[][] pheromonesVolatileCalculate(final double[][] pheromonesArray,final double pheromonesVolatile){
+        double[][] result = ArrayHelper.deepCopy(pheromonesArray);
 
         for(int i = 0 ; i < pheromonesArray.length ; i++){
             for(int j = 0 ; j < pheromonesArray[i].length ; j++){
@@ -52,8 +52,8 @@ public final class PheromonesCalculate {
      * For Pheromones Volatile after ant run
      * After ant run step 2
      */
-    public double[][] pheromonesUpdateCalculate(final double[][] pheromonesArray, List<Integer> listOfTown, double bestDistanceOfLastRun){
-        double[][] result = pheromonesArray.clone();
+    public double[][] pheromonesUpdateCalculate(final double[][] pheromonesArray, final List<Integer> listOfTown,final double bestDistanceOfLastRun){
+        double[][] result = ArrayHelper.deepCopy(pheromonesArray);
         double extraPheromonesFromLastRun = 1d/bestDistanceOfLastRun;
         List<PairIndex> pairIndexList = genneratePairIndex(listOfTown);
 
@@ -63,8 +63,8 @@ public final class PheromonesCalculate {
         return result;
     }
 
-    public double[][] pheromonesPowerAlpha(final double[][] pheromonesArray, double alpha){
-        double[][] result = pheromonesArray.clone();
+    public static double[][] pheromonesPowerAlpha(final double[][] pheromonesArray, double alpha){
+        double[][] result = ArrayHelper.deepCopy(pheromonesArray);
 
         for(int i = 0 ; i < pheromonesArray.length ; i++){
             for(int j = 0 ; j < pheromonesArray[i].length ; j++){
@@ -74,7 +74,7 @@ public final class PheromonesCalculate {
         return result;
     }
     
-    public List<PairIndex> genneratePairIndex(List<Integer> listOfTown){
+    public List<PairIndex> genneratePairIndex(final List<Integer> listOfTown){
     	List<PairIndex> result = new  ArrayList<PairIndex>();
         if(listOfTown.size() < 2){
             return result;
@@ -84,6 +84,16 @@ public final class PheromonesCalculate {
             }
             return result;
         }
-    			
+
+    }
+
+
+    public double runDistance(final double[][] distanceArray,final List<Integer> listOfTown){
+        final List<PairIndex> pairIndexList = genneratePairIndex(listOfTown);
+        double runDistance = 0d;
+        for(PairIndex pairIndex :pairIndexList){
+            runDistance += distanceArray[pairIndex.i][pairIndex.j];
+        }
+        return runDistance;
     }
 }
