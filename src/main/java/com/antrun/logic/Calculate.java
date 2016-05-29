@@ -1,7 +1,10 @@
 package com.antrun.logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Created by srattanakana on 5/28/2016 AD.
  */
@@ -17,36 +20,43 @@ public class Calculate {
 
     public void test(){
         int numberOfRoute = 5;
-        List<Double> cumpopList = initCumpopList(numberOfRoute);
+        double[] cumpopList = initCumpopList(numberOfRoute);
 
     }
 
     /***
      * Cumpop Calculation
      */
-    public List<Double> initCumpopList(final int numOfRoute){
-        List<Double> result = new ArrayList<Double>();
+    public double[] initCumpopList(final int numOfRoute){
+        double[] result = new double[numOfRoute];
         double curr = 0;
-        double step = 1/numOfRoute;
+        double step = 1d/numOfRoute;
         for(int i = 0 ; i < numOfRoute ; i++){
             curr = curr + step;
-            result.add(curr);
+            result[i] = curr;
         }
         return result;
     }
 
-    public List<Double> getCumppopList(final List<Double> wTownList){
-        List<Double> result = new ArrayList<Double>();
+    public double[] getCumppopList(final double[] wTownList,final List<Integer> antRunTownPath){
+        double[] result = wTownList.clone();
         double curr = 0;
-        /** java 8 source code (lambda) to find sum of number in list*/
-        double sumOfWTownList = wTownList.stream().mapToDouble(Double::doubleValue).sum();
 
-        for(int i = 0 ; i < wTownList.size() ; i++){
-            if(wTownList.get(i) == 0){
-                result.add(0d);
+        double[] currentWTownList = wTownList.clone();
+
+        for (Integer town : antRunTownPath){
+            currentWTownList[town] = 0;
+        }
+
+        /** java 8 source code (lambda) to find sum of number in list*/
+        double sumOfWTownList = Arrays.stream(currentWTownList).sum();
+
+        for(int i = 0 ; i < currentWTownList.length ; i++){
+            if(wTownList[i] == 0){
+                result[i] = 0;
             }else {
-                curr = curr + (wTownList.get(i) / sumOfWTownList);
-                result.add(curr);
+                curr = curr + (currentWTownList[i] / sumOfWTownList);
+                result[i] = curr;
             }
         }
         return result;
@@ -59,19 +69,34 @@ public class Calculate {
         return Math.random();
     }
 
-    public int getTown(final List<Double> wTownList) throws Exception{
+    public int getTown(final int numberOfRoute) throws Exception{
         /**
          * Be careful should call random only one time per getTown method
          */
         double randomNumber = random();
-        List<Double> cumppopList = getCumppopList(wTownList);
-/*        for(int i = (cumppopList.size() - 1) ; i > 0 ; i--){
-            if(randomNumber <= cumppopList.get(i)){
+        System.out.print("Random Number : "+randomNumber);
+        double[] cumppopList = initCumpopList(numberOfRoute);
+
+        for(int i = 0 ; i < cumppopList.length ; i++){
+            if(randomNumber <= cumppopList[i]){
                 return i;
             }
-        }*/
-        for(int i = 0 ; i < cumppopList.size() ; i++){
-            if(randomNumber <= cumppopList.get(i)){
+        }
+        /** this is vary rarely case */
+        throw new Exception("Town not found!!! [Please make sure 'wTownList' is not Empty]");
+    }
+
+    public int getTown(final double[] wTownList,final List<Integer> antRunedTownPath) throws Exception{
+        /**
+         * Be careful should call random only one time per getTown method
+         */
+        double randomNumber = random();
+        System.out.print("Random Number : "+randomNumber);
+        double[] cumppopList = getCumppopList(wTownList, antRunedTownPath);
+
+
+        for(int i = 0 ; i < cumppopList.length ; i++){
+            if(randomNumber <= cumppopList[i]){
                 return i;
             }
         }

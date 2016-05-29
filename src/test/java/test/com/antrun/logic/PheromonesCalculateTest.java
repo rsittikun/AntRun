@@ -17,7 +17,7 @@ public class PheromonesCalculateTest {
     @Test
     public void getCumpopListTest(){
         PheromonesCalculate p = new PheromonesCalculate();
-        p.initPheromones(5);
+        p.initPheromones(5,1);
         double[][] expected = {
                 {0,1,1,1,1},
                 {1,0,1,1,1},
@@ -26,12 +26,12 @@ public class PheromonesCalculateTest {
                 {1,1,1,1,0}
                 };
 
-        assertArrayEquals(expected, p.initPheromones(5));
+        assertArrayEquals(expected, p.initPheromones(5,1));
     }
     @Test
     public void pheromonesVolatileCalculateTest(){
         PheromonesCalculate p = new PheromonesCalculate();
-        p.initPheromones(5);
+        p.initPheromones(5,1);
         double[][] expected = {
                 {0,0.98,0.98,0.98,0.98},
                 {0.98,0,0.98,0.98,0.98},
@@ -40,16 +40,16 @@ public class PheromonesCalculateTest {
                 {0.98,0.98,0.98,0.98,0}
         };
 
-        assertArrayEquals(expected, p.pheromonesVolatileCalculate(p.initPheromones(5), 0.02d));
+        assertArrayEquals(expected, p.pheromonesVolatileCalculate(p.initPheromones(5,1), 0.02d));
     }
 
     @Test
     public void pheromonesUpdateCalculateTest(){
         PheromonesCalculate p = new PheromonesCalculate();
-        p.initPheromones(5);
+        p.initPheromones(5,1);
         List<Integer> hu_towns = new ArrayList(Arrays.asList(3,4,2,5,1));
         List<Integer> towns = hu_towns.stream().map(x-> x-1).collect(Collectors.toList());
-        double[][] list_0_98 = p.pheromonesVolatileCalculate(p.initPheromones(5), 0.02d);
+        double[][] list_0_98 = p.pheromonesVolatileCalculate(p.initPheromones(5,1), 0.02d);
 
         double[][] expected = {
                 {0,0.98,0.98,0.98,0.98},

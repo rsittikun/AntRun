@@ -18,14 +18,14 @@ public final class PheromonesCalculate {
     /***
      * For 1st round
      */
-    public double[][] initPheromones(int size){
+    public double[][] initPheromones(final int size, final double initPheromones){
         double[][] result = new double[size][size];
         for(int i = 0 ; i < result.length ; i++){
             for(int j = 0 ; j < result[i].length ; j++){
                 if(i==j)
-                    result[i][j] = 0;
+                    result[i][j] = 0d;
                 else
-                    result[i][j] = 1;
+                    result[i][j] = initPheromones;
             }
         }
         return result;
@@ -59,6 +59,17 @@ public final class PheromonesCalculate {
 
         for(PairIndex p: pairIndexList){
                     result[p.i][p.j] = pheromonesArray[p.i][p.j] + extraPheromonesFromLastRun;
+        }
+        return result;
+    }
+
+    public double[][] pheromonesPowerAlpha(final double[][] pheromonesArray, double alpha){
+        double[][] result = pheromonesArray.clone();
+
+        for(int i = 0 ; i < pheromonesArray.length ; i++){
+            for(int j = 0 ; j < pheromonesArray[i].length ; j++){
+                    result[i][j] = Math.pow(pheromonesArray[i][j], alpha);
+            }
         }
         return result;
     }
