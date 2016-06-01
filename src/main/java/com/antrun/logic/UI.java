@@ -1,22 +1,16 @@
 package com.antrun.logic;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 public class UI {
 
@@ -85,15 +79,37 @@ public class UI {
 					final double betaVal = Double.valueOf(beta.getText());
 
 					//READ FILE
+///distance
+					List<String> tmpDataSubList = null;
+					List<List<String>> tmpDataList = new ArrayList<>();
+					FileInputStream fstream = new FileInputStream(System.getProperty("user.dir")+"/distance.txt");
+					BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+					String strLine = "";
+
+					//Read File Line By Line
+					while ((strLine = br.readLine()) != null)   {
+						// Print the content on the console
+						tmpDataSubList = splitStringToList(strLine, "|");
+						tmpDataList.add(tmpDataSubList);
+					}
+					//Close the input stream
+					br.close();
+
+					double[][] distanceArray = new double[numberOfRoute][numberOfRoute];
+					for(int i=0; i<numberOfRoute ; i++){
+						for(int j=0 ; j< numberOfRoute ;j++){
+							distanceArray[i][j] = Double.parseDouble(tmpDataList.get(i).get(j));
+						}
+					}
 
 					//TODO: Get from Excel file
-					final double[][] distanceArray = {
+				/*	final double[][] distanceArray = {
 							{0, 10, 15, 8, 4},
 							{10, 0, 12, 5, 8},
 							{15, 12, 0, 14, 20},
 							{8, 5, 14, 0, 15},
 							{4, 8, 20, 15, 0}
-					};
+					};*/
 
 					//END READ FILE
 
@@ -285,5 +301,15 @@ public class UI {
 		beta.setText("5");
 		panel.add(beta);
 
+	}
+
+	public static List<String> splitStringToList(String rcvText, String rcvDelim) {
+		List<String> rtnList = null;
+		if(rcvText != null && rcvDelim != null) {
+			String[] dataArr = rcvText.split("[\\"+rcvDelim+"]");
+			rtnList = Arrays.asList(dataArr);
+		}
+
+		return rtnList;
 	}
 }
