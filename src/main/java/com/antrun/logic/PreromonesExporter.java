@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class PreromonesExporter {
             Row row = currSheeet.createRow(rowIndex);
             for(int j = 0 ; j < data[i].length ; j++){
                 Cell cell = row.createCell(j);
-                cell.setCellValue(data[i][j]);
+                cell.setCellValue(new DecimalFormat("#.##########").format(data[i][j]));
             }
         }
 

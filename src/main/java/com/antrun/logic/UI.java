@@ -84,6 +84,8 @@ public class UI {
 					final double alphaVal = Double.valueOf(alpha.getText());
 					final double betaVal = Double.valueOf(beta.getText());
 
+					//READ FILE
+
 					//TODO: Get from Excel file
 					final double[][] distanceArray = {
 							{0, 10, 15, 8, 4},
@@ -93,6 +95,8 @@ public class UI {
 							{4, 8, 20, 15, 0}
 					};
 
+					//END READ FILE
+
 					HashMap<String, Integer> pp = new HashMap<String, Integer>();
 
 					PheromonesCalculate p = new PheromonesCalculate();
@@ -100,7 +104,7 @@ public class UI {
 
 					double[][] wIJ = WijCalculation.getWij(pheromonesList, alphaVal, distanceArray, betaVal);
 
-					PreromonesExporter preromonesExporter = new PreromonesExporter(System.getProperty("user.dir") + "/test.xls");
+					PreromonesExporter preromonesExporter = new PreromonesExporter(System.getProperty("user.dir") + "/AntRunResult.xls");
 
 					preromonesExporter.printStrings(PreromonesExporter.SHEET_PATH, "Ant No.", "Round", "Route", "Distance");
 
@@ -110,7 +114,7 @@ public class UI {
 						preromonesExporter.printLint(PreromonesExporter.SHEET_PHERO);
 
 						preromonesExporter.printString(PreromonesExporter.SHEET_WIJ, "==========Wij list round[" + (l + 1) + "]==========");
-						preromonesExporter.printArray(PreromonesExporter.SHEET_WIJ, pheromonesList);
+						preromonesExporter.printArray(PreromonesExporter.SHEET_WIJ, wIJ);
 						preromonesExporter.printLint(PreromonesExporter.SHEET_WIJ);
 
 						//System.out.println(Arrays.deepToString(pheromonesList));
@@ -153,6 +157,7 @@ public class UI {
 					JOptionPane.showMessageDialog(null, "Calculate Completed");
 				}catch (Exception ex){
 					JOptionPane.showMessageDialog(null, "Err : "+ex.toString());
+					ex.printStackTrace();
 				}
 
 
@@ -167,6 +172,7 @@ public class UI {
 		route.setBounds(37, 83, 257, 45);
 		panel.add(route);
 		route.setColumns(10);
+		route.setText("5");
 
 		JLabel lblUploadFile = new JLabel(
 				"\u0E08\u0E33\u0E19\u0E27\u0E19\u0E40\u0E2A\u0E49\u0E19\u0E17\u0E32\u0E07 :");
@@ -208,6 +214,7 @@ public class UI {
 		loop.setHorizontalAlignment(SwingConstants.LEFT);
 		loop.setColumns(10);
 		loop.setBounds(37, 152, 257, 45);
+		loop.setText("10");
 		panel.add(loop);
 
 		JLabel label_1 = new JLabel(
@@ -221,6 +228,7 @@ public class UI {
 		pheromone.setHorizontalAlignment(SwingConstants.LEFT);
 		pheromone.setColumns(10);
 		pheromone.setBounds(37, 221, 257, 45);
+		pheromone.setText("1");
 		panel.add(pheromone);
 
 		JLabel lblAlpha = new JLabel("ALPHA :");
@@ -233,6 +241,7 @@ public class UI {
 		alpha.setHorizontalAlignment(SwingConstants.LEFT);
 		alpha.setColumns(10);
 		alpha.setBounds(37, 290, 257, 45);
+		alpha.setText("5");
 		panel.add(alpha);
 
 		JLabel label_3 = new JLabel(
@@ -246,6 +255,7 @@ public class UI {
 		ant.setHorizontalAlignment(SwingConstants.LEFT);
 		ant.setColumns(10);
 		ant.setBounds(336, 152, 257, 45);
+		ant.setText("10");
 		panel.add(ant);
 
 		JLabel label_4 = new JLabel(
@@ -259,6 +269,7 @@ public class UI {
 		volatileRate.setHorizontalAlignment(SwingConstants.LEFT);
 		volatileRate.setColumns(10);
 		volatileRate.setBounds(336, 221, 257, 45);
+		volatileRate.setText("0.02");
 		panel.add(volatileRate);
 
 		JLabel lblBeta = new JLabel("BETA :");
@@ -271,6 +282,7 @@ public class UI {
 		beta.setHorizontalAlignment(SwingConstants.LEFT);
 		beta.setColumns(10);
 		beta.setBounds(336, 290, 257, 45);
+		beta.setText("5");
 		panel.add(beta);
 
 	}

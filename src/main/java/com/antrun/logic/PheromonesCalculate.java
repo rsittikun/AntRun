@@ -100,10 +100,11 @@ public final class PheromonesCalculate {
     public String runPath(final List<Integer> listOfTown){
         StringBuilder path = new StringBuilder();
         for(int i = 0 ; i < listOfTown.size() ; i++){
+            int hu_town = listOfTown.get(i)+1;
             if(i==0){
-                path.append(listOfTown.get(i));
+                path.append(hu_town);
             }else{
-                path.append(" -> "+listOfTown.get(i));
+                path.append(" -> "+hu_town);
             }
         }
 
