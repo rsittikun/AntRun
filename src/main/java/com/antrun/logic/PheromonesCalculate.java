@@ -96,4 +96,17 @@ public final class PheromonesCalculate {
         }
         return runDistance;
     }
+
+    public String runPath(final List<Integer> listOfTown){
+        StringBuilder path = new StringBuilder();
+        for(int i = 0 ; i < listOfTown.size() ; i++){
+            if(i==0){
+                path.append(listOfTown.get(i));
+            }else{
+                path.append(" -> "+listOfTown.get(i));
+            }
+        }
+
+        return path.toString();
+    }
 }

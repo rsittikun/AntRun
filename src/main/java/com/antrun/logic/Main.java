@@ -1,11 +1,14 @@
+/*
 package com.antrun.logic;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+*/
 /**
  * Created by srattanakana on 5/28/2016 AD.
- */
+ *//*
+
 public class Main {
     public static void main(String args[]) throws Exception{
         final int numberOfRoute = 5;
@@ -33,53 +36,64 @@ public class Main {
         double [][] wIJ = WijCalculation.getWij(pheromonesList, alpha, distanceArray, beta);
 
         PreromonesExporter preromonesExporter = new PreromonesExporter(System.getProperty("user.dir")+"/test.xls");
+
+        preromonesExporter.printStrings(PreromonesExporter.SHEET_PATH, "Ant No.", "Round", "Route", "Distance");
+
         for (int l=0 ;l < numberOfLoop ; l++) {
-            preromonesExporter.printString("==========preromones list round["+(l+1)+"]==========");
-            preromonesExporter.printArray(pheromonesList);
-            preromonesExporter.printLint();
+            preromonesExporter.printString(PreromonesExporter.SHEET_PHERO, "==========preromones list round["+(l+1)+"]==========");
+            preromonesExporter.printArray(PreromonesExporter.SHEET_PHERO, pheromonesList);
+            preromonesExporter.printLint(PreromonesExporter.SHEET_PHERO );
+
+            preromonesExporter.printString(PreromonesExporter.SHEET_WIJ, "==========Wij list round["+(l+1)+"]==========");
+            preromonesExporter.printArray(PreromonesExporter.SHEET_WIJ, pheromonesList);
+            preromonesExporter.printLint(PreromonesExporter.SHEET_WIJ );
 
             //System.out.println(Arrays.deepToString(pheromonesList));
 
             Calculate c = new Calculate();
             //TODO : cal wIJ;
 
-            List<Integer> antRunedTownPath = new ArrayList<>();
-            int town = c.getTown(numberOfRoute);
-            antRunedTownPath.add(town);
-            do {
-                town = c.getTown(wIJ[town], antRunedTownPath);
-                //TODO : cal wIJ
+            List<Integer> bestAntRunedTownPath = new ArrayList<>();
+            double bestPath = Double.MAX_VALUE;
+            for(int a = 0 ; a < numberOfAnt ; a++) {
+                List<Integer> antRunedTownPath  = new ArrayList<>();
+                int town = c.getTown(numberOfRoute);
                 antRunedTownPath.add(town);
+                do {
+                    town = c.getTown(wIJ[town], antRunedTownPath);
+                    //TODO : cal wIJ
+                    antRunedTownPath.add(town);
 
-            } while (antRunedTownPath.size() < numberOfRoute);
-
-            String ss = "";
-            //System.out.println("");
-            for (Integer i : antRunedTownPath) {
-                int hu_i = i + 1;
-                //System.out.print(hu_i + " -> ");
-                ss += hu_i + " -> ";
+                } while (antRunedTownPath.size() < numberOfRoute);
+                double currDistance = p.runDistance(distanceArray, antRunedTownPath);
+                if(currDistance < bestPath){
+                    bestPath = currDistance;
+                    bestAntRunedTownPath = antRunedTownPath;
+                }
+                String hu_antNo = String.valueOf(a+1);
+                String hu_roundNo = String.valueOf(l+1);
+                preromonesExporter.printStrings(PreromonesExporter.SHEET_PATH, hu_antNo, hu_roundNo, p.runPath(antRunedTownPath), String.valueOf(p.runDistance(distanceArray, antRunedTownPath)));
+                //preromonesExporter.printLint(PreromonesExporter.SHEET_PATH );
             }
-            ss += "Distance => "+p.runDistance(distanceArray, antRunedTownPath);
 
-
-            pp.put(ss, pp.getOrDefault(ss,0)+1);
-            System.out.println(ss);
-            //System.out.print("Distance => "+p.runDistance(distanceArray, antRunedTownPath));
 
             //TODO: Make sure update Pheromones and wIJ only one time
             pheromonesList = p.pheromonesVolatileCalculate(pheromonesList, volatileRate);
-            pheromonesList = p.pheromonesUpdateCalculate(pheromonesList, antRunedTownPath ,p.runDistance(distanceArray, antRunedTownPath));
-            pheromonesList = p.pheromonesPowerAlpha(pheromonesList, alpha);
+            pheromonesList = p.pheromonesUpdateCalculate(pheromonesList, bestAntRunedTownPath ,p.runDistance(distanceArray, bestAntRunedTownPath));
             //update wIJ
-            wIJ = WijCalculation.getWij(pheromonesList, alpha, distanceArray, beta);
+            wIJ = WijCalculation.getWij(p.pheromonesPowerAlpha(pheromonesList, alpha), alpha, distanceArray, beta);
         }
         preromonesExporter.dowrite();
 
-        /*for(String key : pp.keySet()){
+        */
+/*for(String key : pp.keySet()){
             System.out.println(key+"  count :  "+pp.get(key));
-        }*/
+        }*//*
 
+        System.out.println("===== Press enter to exit =====");
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
     }
 
 }
+*/
